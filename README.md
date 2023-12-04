@@ -14,6 +14,6 @@ We want to be able to manage our project:
 - update attributes of an object
 - Destroy an object
 
-Authors
+## Authors
 - Tefe Mebuiefene - <https://github.com/glowcoder1>
 - Godspower Mukoro - <https://github.com/Gmukoro>
