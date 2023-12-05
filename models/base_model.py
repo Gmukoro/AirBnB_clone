@@ -18,7 +18,8 @@ class BaseModel:
     updated_at - assign with the current datetime on update if instance
 
     methods:
-    save - updates the public instance attr updated_at with the current datetime
+    save - updates the public instance attr updated_at with the current
+    datetime
     to_dict(self): returns a dict containing all keys/values of the instance
     """
 
@@ -28,7 +29,8 @@ class BaseModel:
             for key, value in kwargs.items():
                 if (key != "__class__"):
                     if (key == "updated_at" or key == "created_at"):
-                        value = datetime.strptime(value, "%Y-%m-%dT%H:%M:%S.%f")
+                        value = datetime.strptime(value,
+                                                  "%Y-%m-%dT%H:%M:%S.%f")
                     setattr(self, key, value)
         else:
             self.id = str(uuid.uuid4())
