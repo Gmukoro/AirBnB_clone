@@ -48,7 +48,6 @@ class BaseModel:
         dict_copy = self.__dict__.copy()
 
         dict_copy['__class__'] = self.__class__.__name__
-        for key, value in dict_copy.items():
-            if (key == "created_at" or key == "updated_at"):
-                dict_copy[key] = value.isoformat()
+        dict_copy["created_at"] = dict_copy["created_at"].isoformat()
+        dict_copy["updated_at"] = dict_copy["updated_at"].isoformat()
         return dict_copy
