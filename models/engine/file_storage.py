@@ -20,7 +20,7 @@ class FileStorage:
         objects_dict (dict): A dictionary storing instantiated objects.
     """
 
-    __file_path = "store.json"
+    __file_path = "data.json"
     __objects = {}
 
     def all(self):
