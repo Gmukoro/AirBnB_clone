@@ -12,6 +12,7 @@ from models.place import Place
 from models.amenity import Amenity
 from models.review import Review
 
+
 class FileStorage:
     """This class represents an abstracted storage engine.
 
@@ -50,4 +51,3 @@ class FileStorage:
                     self.new(eval(class_name)(**obj_data))
         except FileNotFoundError:
             return
-
