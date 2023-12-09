@@ -18,7 +18,7 @@ from models.review import Review
 def parse_command_arguments(command):
     curly_braces = re.search(r"\{(.*?)\}", command)
     brackets = re.search(r"\[(.*?)\]", command)
-    
+
     if curly_braces is None:
         if brackets is None:
             return [i.strip(",") for i in split(command)]
@@ -105,7 +105,7 @@ class HBNBConsole(cmd.Cmd):
         else:
             new_instance = eval(args_list[0])()
             print(new_instance.id)
-            storage.save()
+            new_instance.save()
 
     def do_show(self, command):
         """Usage: show <class> <id> or <class>.show(<id>)
@@ -140,6 +140,7 @@ class HBNBConsole(cmd.Cmd):
             print("** instance id missing **")
         elif "{}.{}".format(args_list[0], args_list[1]) not in objects_dict.keys():
             print("** no instance found **")
+
         else:
             del objects_dict["{}.{}".format(args_list[0], args_list[1])]
             storage.save()
