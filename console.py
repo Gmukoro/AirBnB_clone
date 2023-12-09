@@ -69,14 +69,18 @@ class HBNBConsole(cmd.Cmd):
         dot_match = re.search(r"\.", command)
 
         if dot_match is not None:
-            command_list = [command[:dot_match.span()[0]], command[dot_match.span()[1]:]]
+            command_list =
+            [command[:dot_match.span()[0]], command[dot_match.span()[1]:]]
             dot_match = re.search(r"\((.*?)\)", command_list[1])
 
             if dot_match is not None:
-                sub_command = [command_list[1][:dot_match.span()[0]], dot_match.group()[1:-1]]
+                sub_command =
+                [command_list[1][:dot_match.span()[0]],
+                 dot_match.group()[1:-1]]
 
                 if sub_command[0] in command_dict.keys():
-                    full_command = "{} {}".format(command_list[0], sub_command[1])
+                    full_command =
+                    "{} {}".format(command_list[0], sub_command[1])
                     return command_dict[sub_command[0]](full_command)
 
         print("*** Unknown syntax: {}".format(command))
@@ -105,7 +109,7 @@ class HBNBConsole(cmd.Cmd):
         else:
             new_instance = eval(args_list[0])()
             print(new_instance.id)
-            new_instance.save()
+            storage.save()
 
     def do_show(self, command):
         """Usage: show <class> <id> or <class>.show(<id>)
@@ -138,7 +142,8 @@ class HBNBConsole(cmd.Cmd):
             print("** class doesn't exist **")
         elif len(args_list) == 1:
             print("** instance id missing **")
-        elif "{}.{}".format(args_list[0], args_list[1]) not in objects_dict.keys():
+        elif "{}.{}".format(
+                args_list[0], args_list[1]) not in objects_dict.keys():
             print("** no instance found **")
 
         else:
@@ -151,13 +156,14 @@ class HBNBConsole(cmd.Cmd):
         If no class is specified, displays all instantiated objects.
         """
         args_list = parse_command_arguments(command)
-
-        if len(args_list) > 0 and args_list[0] not in HBNBConsole.__valid_classes:
+        classes = HBNBConsole.__valid_classes
+        if len(args_list) > 0 and args_list[0] not in classes:
             print("** class doesn't exist **")
         else:
             objects_list = []
             for obj in storage.all().values():
-                if len(args_list) > 0 and args_list[0] == obj.__class__.__name__:
+                class_name = obj.__class__.__name__
+                if len(args_list) > 0 and args_list[0] == class_name:
                     objects_list.append(obj.__str__())
                 elif len(args_list) == 0:
                     objects_list.append(obj.__str__())
@@ -195,7 +201,8 @@ class HBNBConsole(cmd.Cmd):
         if len(args_list) == 1:
             print("** instance id missing **")
             return False
-        if "{}.{}".format(args_list[0], args_list[1]) not in objects_dict.keys():
+        if "{}.{}".format(
+                args_list[0], args_list[1]) not in objects_dict.keys():
             print("** no instance found **")
             return False
         if len(args_list) == 2:
@@ -220,8 +227,9 @@ class HBNBConsole(cmd.Cmd):
             obj = objects_dict["{}.{}".format(args_list[0], args_list[1])]
 
             for key, value in eval(args_list[2]).items():
+                data_types = {str, int, float}
                 if (key in obj.__class__.__dict__.keys() and
-                        type(obj.__class__.__dict__[key]) in {str, int, float}):
+                        type(obj.__class__.__dict__[key]) in data_types):
                     val_type = type(obj.__class__.__dict__[key])
                     obj.__dict__[key] = val_type(value)
                 else:
