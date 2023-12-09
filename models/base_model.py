@@ -24,7 +24,6 @@ class BaseModel:
     to_dict(self): returns a dict containing all keys/values of the instance
     """
 
-
     def __init__(self, *args, **kwargs):
 
         date_form = "%Y-%m-%dT%H:%M:%S.%f"
@@ -42,19 +41,14 @@ class BaseModel:
             self.updated_at = self.created_at
             models.storage.new(self)
 
-
-
     def __str__(self):
         """ returns  [<class name>] (<self.id>) <self.__dict__>"""
 
         return f"[{self.__class__.__name__}] ({self.id}) {self.__dict__}"
 
-
-
     def save(self):
         self.updated_at = datetime.now()
         models.storage.save()
-
 
     def to_dict(self):
 
