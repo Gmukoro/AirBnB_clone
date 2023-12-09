@@ -12,6 +12,7 @@ from models.place import Place
 from models.amenity import Amenity
 from models.review import Review
 
+
 class FileStorage:
     """This class represents an abstracted storage engine.
 
@@ -20,33 +21,33 @@ class FileStorage:
         objects_dict (dict): A dictionary storing instantiated objects.
     """
 
-    file_path = "file.json"
-    objects_dict = {}
+    __file_path = "data.json"
+    __objects = {}
 
-    def all_instances(self):
+    def all(self):
         """Returns the dictionary of stored objects."""
-        return FileStorage.objects_dict
+        return self.__objects
 
-    def add_instance(self, instance):
+    def new(self, obj):
         """Adds instance to objects_dict with key <instance_class_name>.id."""
-        class_name = instance.__class__.__name__
-        FileStorage.objects_dict["{}.{}".format(class_name, instance.id)] = instance
+        key = f"{obj.__class__.__name__}.{obj.id}"
+        self.__objects[key] = obj
 
-    def save_instances(self):
+    def save(self):
         """Serializes objects_dict to the JSON file file_path."""
-        serialized_objects = {key: FileStorage.objects_dict[key].to_dict() for key in FileStorage.objects_dict.keys()}
-        with open(FileStorage.file_path, "w") as file:
+        key_val = self.__objects.items()
+        serialized_objects = {key: val.to_dict() for key, val in key_val}
+        with open(self.__file_path, "w") as file:
             json.dump(serialized_objects, file)
 
-    def reload_instances(self):
-        """Deserializes the JSON file file_path to objects_dict, if it exists."""
+    def reload(self):
+        """Deserializes the JSON file in file_path to objects, if it exists."""
         try:
-            with open(FileStorage.file_path) as file:
+            with open(self.__file_path) as file:
                 serialized_objects = json.load(file)
                 for obj_data in serialized_objects.values():
                     class_name = obj_data["__class__"]
                     del obj_data["__class__"]
-                    self.add_instance(eval(class_name)(**obj_data))
+                    self.new(eval(class_name)(**obj_data))
         except FileNotFoundError:
             return
-
