@@ -16,6 +16,8 @@ from models.review import Review
 
 
 def parse_command_arguments(command):
+    """parses command line arguments"""
+
     curly_braces = re.search(r"\{(.*?)\}", command)
     brackets = re.search(r"\[(.*?)\]", command)
 
