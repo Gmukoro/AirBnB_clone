@@ -69,18 +69,17 @@ class HBNBConsole(cmd.Cmd):
         dot_match = re.search(r"\.", command)
 
         if dot_match is not None:
-            command_list =
-            [command[:dot_match.span()[0]], command[dot_match.span()[1]:]]
+            command_list = [command[:dot_match.span()[0]],
+                            command[dot_match.span()[1]:]]
             dot_match = re.search(r"\((.*?)\)", command_list[1])
 
             if dot_match is not None:
-                sub_command =
-                [command_list[1][:dot_match.span()[0]],
-                 dot_match.group()[1:-1]]
+                sub_command = [command_list[1][:dot_match.span()[0]],
+                               dot_match.group()[1:-1]]
 
                 if sub_command[0] in command_dict.keys():
-                    full_command =
-                    "{} {}".format(command_list[0], sub_command[1])
+                    full_command = "{} {}".format(command_list[0],
+                                                  sub_command[1])
                     return command_dict[sub_command[0]](full_command)
 
         print("*** Unknown syntax: {}".format(command))
