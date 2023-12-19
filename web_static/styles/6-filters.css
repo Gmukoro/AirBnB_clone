@@ -55,6 +55,8 @@
   margin-top: 16px;
   padding: 0 30px 30px;
   display: none;
+  position : relative;
+  z-index: 99;
 }
 .filters ul{
   padding-left: 30px;
